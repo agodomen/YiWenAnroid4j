@@ -10,19 +10,17 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import net.sourceforge.zbar.Config;
-import net.sourceforge.zbar.Image;
 import net.sourceforge.zbar.ImageScanner;
 import net.sourceforge.zbar.Symbol;
-import net.sourceforge.zbar.SymbolSet;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import cn.bingoogolapple.qrcode.core.QRCodeView;
+import cn.bingoogolapple.qrcode.core.UploadFileTask;
 
 public class ZBarView extends QRCodeView {
 
@@ -58,6 +56,7 @@ public class ZBarView extends QRCodeView {
 
             @Override
             protected String doInBackground(Void... params) {
+
                String result="正在识别中";
                 if(data!=null)
                     return result;
@@ -79,6 +78,8 @@ public class ZBarView extends QRCodeView {
         }.execute();
 
     }
+
+
 
 
     public String shotImage(byte[] data){

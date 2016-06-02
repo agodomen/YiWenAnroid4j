@@ -59,7 +59,7 @@ public class ScanActivity extends AppCompatActivity implements QRCodeView.Delega
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.start_spot:
-                mQRCodeView.turnFlag();
+                mQRCodeView.turnFlag(this);
                 mQRCodeView.startSpot();
                 break;
             case R.id.stop_spot:

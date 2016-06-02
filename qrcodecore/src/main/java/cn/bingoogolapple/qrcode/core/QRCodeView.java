@@ -167,7 +167,9 @@ public abstract class QRCodeView extends FrameLayout implements Camera.PreviewCa
     public void closeFlashlight() {
         mPreview.closeFlashlight();
     }
-    public  void turnFlag(){
+    public Context context;
+    public  void turnFlag(Context context){
+        this.context=context;
         flag=true;
     }
     private  static volatile   boolean flag=false;
@@ -238,7 +240,7 @@ public abstract class QRCodeView extends FrameLayout implements Camera.PreviewCa
     }
 
     /** Create a File for saving an image or video */
-    private static File getOutputMediaFile(int type){
+    public static File getOutputMediaFile(int type){
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), "Camera");
         if (! mediaStorageDir.exists()){
@@ -291,6 +293,11 @@ public abstract class QRCodeView extends FrameLayout implements Camera.PreviewCa
                 bitmap.compress(Bitmap.CompressFormat.PNG,90,fileOutputStream);
                 fileOutputStream.flush();
                 fileOutputStream.close();
+                File fout=getOutputMediaFile(1024);
+                ResultInfo resultInfo=new ResultInfo();
+                UploadFileTask uploadFileTask=new UploadFileTask(resultInfo,context);
+                uploadFileTask.execute(fout.getAbsolutePath());
+                String str=resultInfo.getResult();
             } catch (FileNotFoundException e) {
 
             } catch (IOException e) {
@@ -299,7 +306,7 @@ public abstract class QRCodeView extends FrameLayout implements Camera.PreviewCa
                 stopCamera();
                 startCamera();
                 showScanRect();
-                startSpot();
+                stopSpot();
             }
 
         }
